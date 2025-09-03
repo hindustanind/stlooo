@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StyloSphere</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0b0b12">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #0a0118;
+            color: #e0e0e0;
+            font-family: sans-serif;
+            overflow-x: hidden;
+            /* Disable text selection for a more app-like feel */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        /* Custom futuristic scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a0a37;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f400f4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff33ff;
+        }
+
+        /* Page Transition Animation Styles - Faster and Smoother */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(15px) scale(0.98); }
+        }
+        @keyframes backdropFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Dressing Room Loader Animation */
+        @keyframes swing-hanger {
+            0%, 100% { transform: rotate(4deg); }
+            50% { transform: rotate(-4deg); }
+        }
+        .animate-swing-hanger {
+            animation: swing-hanger 2.5s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        .page-transition-enter {
+            animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        .page-transition-exit {
+            animation: fadeOut 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+        }
+        .backdrop-fade-in {
+            animation: backdropFadeIn 0.3s ease-out forwards;
+        }
+
+        /* Staggered animation for list items */
+        .stagger-in > * {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation-delay: var(--stagger-delay, 0ms);
+        }
+
+        @keyframes animate-fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: animate-fade-in 0.5s ease-out forwards;
+        }
+        
+        /* Guided Tutorial Hint Animation */
+        @keyframes hint-fade-in-out {
+            0% { opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .animate-hint {
+            animation: hint-fade-in-out 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        /* For 3D carousel */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Category Filter Animation */
+        @keyframes categoryButtonReveal {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .category-button-reveal {
+            opacity: 0; /* Start hidden */
+            animation: categoryButtonReveal 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation-delay: var(--delay, 0s);
+        }
+        
+        /* Hide scrollbar on chat history until hover */
+        .chat-scroll-area::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
+        .chat-scroll-area:hover::-webkit-scrollbar-thumb {
+            background: #f400f4;
+        }
+        .chat-scroll-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-scroll-area:hover::-webkit-scrollbar-track {
+            background: #1a0a37;
+        }
+
+        /* Tutorial Highlight Animation */
+        @keyframes pulse-border {
+            0%, 100% { box-shadow: 0 0 15px #00f2ff, 0 0 0 9999px rgba(10, 1, 24, 0.85); }
+            50% { box-shadow: 0 0 25px #00f2ff, 0 0 0 9999px rgba(10, 1, 24, 0.85); }
+        }
+        .tutorial-highlight {
+            animation: pulse-border 2s infinite ease-in-out;
+        }
+
+        /* Glowy border animation for outfit cards */
+        @keyframes border-spin {
+            100% {
+                transform: rotate(1turn);
+            }
+        }
+        .outfit-card-border-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .outfit-card-border-glow::before {
+            content: '';
+            position: absolute;
+            z-index: 0;
+            left: -50%;
+            top: -50%;
+            width: 200%;
+            height: 200%;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-image: conic-gradient(transparent, rgba(255, 255, 255, 0.3), transparent 25%);
+            animation: border-spin 4s linear infinite;
+            animation-play-state: paused;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .outfit-card-border-glow.group:hover::before {
+            animation-play-state: running;
+            opacity: 1;
+        }
+        
+        /* Neon Glow Animation for Text */
+        @keyframes neon-glow {
+            0%, 100% {
+                text-shadow: 0 0 4px #fff, 0 0 10px #f400f4, 0 0 20px #f400f4, 0 0 30px #00f2ff, 0 0 40px #00f2ff;
+            }
+            50% {
+                text-shadow: 0 0 6px #fff, 0 0 15px #f400f4, 0 0 30px #f400f4, 0 0 45px #00f2ff, 0 0 60px #00f2ff;
+            }
+        }
+        .animate-neon-glow {
+            animation: neon-glow 2.5s ease-in-out infinite;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.16.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root" class="bg-gradient-to-br from-[#0a0118] to-[#1a0a37] text-gray-200 font-sans"></div>
+    <audio id="sfx-transition" preload="auto" playsinline crossOrigin="anonymous">
+      <source src="https://cdn.jsdelivr.net/gh/gushh/kenney-ui-sounds@master/Audio/confirmation_001.mp3" type="audio/mpeg" />
+      <source src="https://cdn.jsdelivr.net/gh/gushh/kenney-ui-sounds@master/Audio/confirmation_001.ogg" type="audio/ogg" />
+    </audio>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+/*
+ * Empty placeholder stylesheet.
+ *
+ * The application imports `/index.css` via a `<link>` tag in `index.html`.  On some
+ * deployment platforms (like Netlify) the absence of this file causes a build
+ * warning and can result in 404s when the page is served.  Although the
+ * application’s styling is handled entirely with Tailwind and inline CSS in
+ * `index.html`, providing this empty file ensures that the referenced asset
+ * exists without affecting the look and feel of the app.
+ */
