@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 // Vite 6’s resolver can sometimes fail to locate `.tsx` files when the extension
 // is omitted (especially on case‑sensitive file systems).  Providing the
 // extension here avoids the unresolved import error seen on Netlify builds.
-import Header from './components/myOutfits/Header.tsx';
+import Header from './components/myOutfits/Header';
 import HomePage from './components/home/HomePage';
 import OutfitGeneratorPage from './components/outfitGenerator/OutfitGeneratorPage';
 import MyOutfitsPage from './components/myOutfits/MyOutfitsPage';
